@@ -12,7 +12,15 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from app import Base, Book
+import importlib.util, os
+spec = importlib.util.spec_from_file_location(
+    "app_module",
+    os.path.join(os.path.dirname(__file__), "..", "app.py")
+)
+app_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(app_module)
+Base = app_module.Base
+Book = app_module.Book
 
 # ─────────────────────────────────────────────
 # Фикстуры — создают временную БД для каждого теста
