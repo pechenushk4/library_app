@@ -7,4 +7,4 @@ FROM python:3.12-slim
 WORKDIR /app
 COPY --from=builder /install /usr/local
 COPY app.py .
-CMD ["python", "-c", "from app import engine; print('DB connected OK')"]
+CMD ["python", "app.py"]
